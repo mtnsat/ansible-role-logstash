@@ -12,9 +12,9 @@
     owner: root
     group: root
     mode: 0644
-  with_items:
-    - 01-lumberjack-input.conf
-    - 30-lumberjack-output.conf
+  with_items: "{{ logstash_config_file }}"
+#    - 01-lumberjack-input.conf
+#    - 30-lumberjack-output.conf
   notify: restart logstash
 
 - name: Create Logstash filters.
@@ -24,12 +24,7 @@
     owner: root
     group: root
     mode: 0644
-  with_items:
-    - 10-syslog.conf
-    - 11-nginx.conf
-    - 12-apache.conf
-    - 14-solr.conf
-    - 15-drupal.conf
+  with_items: "{{ logstash_filters}}"
   notify: restart logstash
 
 - name: Create Logstash configuration file for local syslog.
