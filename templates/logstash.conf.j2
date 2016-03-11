@@ -1,14 +1,33 @@
 input {
-        tcp {
-                port => 5000
-                codec => json_lines
-        }
+  tcp {
+    port => 5000
+    codec => json_lines
+  }
+{% for queue in queue_list %}
+  rabbitmq {
+    durable => true
+    exchange => '{{ queue }}'
+    host => '{{ rabbitmq_host }}'
+    password => '{{ rabbitmq_password}}'
+    queue => '{{ queue }}'
+    user => '{{ rabbitmq_user }}'
+    vhost => '/{{ queue }}'
+{% if queue == "zeroimpact" %}
+    codec => 'json'
+{% else %}
+    codec => 'json_lines'
+{% endif %}
+    add_field => ['@type','{{ queue }}-rabbitmq-input']
+  }
+{% endfor %}
 }
 
-## Add your filters here
+## Add filters here
+
 
 output {
-        elasticsearch {
-                hosts => "{{ logstash_elasticsearch_host }}:9200"
-        }
+  elasticsearch {
+    hosts => "elasticsearch:9200"
+  }
+  stdout { }
 }
