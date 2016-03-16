@@ -27,7 +27,7 @@ input {
 
 output {
   elasticsearch {
-    hosts => "elasticsearch:9200"
+    hosts => "{{ elasticsearch_host }}:9200"
   }
   stdout { }
 }
