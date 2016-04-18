@@ -7,7 +7,7 @@ env:
 
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install curl
+  - sudo apt-get install curl git
 
 install:
   # Install Ansible.
@@ -17,7 +17,8 @@ install:
   - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
 
   # Install required dependencies.
-  - ansible-galaxy install geerlingguy.elasticsearch
+  - git clone https://github.com/geerlingguy/ansible-role-java.git geerlingguy.java
+  - git clone https://github.com/mtnsat/ansible-role-elasticsearch mtnsat.elasticsearch
 
 script:
   # Check the role/playbook's syntax.
