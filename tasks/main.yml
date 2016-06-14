@@ -69,6 +69,5 @@
   notify: restart logstash
   when: logstash_java_opts is defined
 
-
 - name: Ensure Logstash is started and enabled on boot.
   service: "name=logstash state=started enabled={{ logstash_enabled_on_boot }}"
