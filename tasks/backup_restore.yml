@@ -1,0 +1,9 @@
+#---
+#- name: Create cron job to run export_gz to S3
+#  cron: 
+#    name: Export logstash gz files to S3. Managed by Ansible
+#    job: logstash_archive.sh
+#
+#
+##05 * * * * export AWS_CONFIG_FILE=/mnt/logstash/archive/aws_cli_profile.conf; /mnt/logstash/archive/store_archive_remotely.sh -a /mnt/logstash/archive -h logstash60.mtnsatcloud.com -b mtnsat-logs -f 2>&1 | logger -sp local0.info -t logarchiver &>> /var/log/archiver_log
+#
