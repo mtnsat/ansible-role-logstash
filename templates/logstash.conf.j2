@@ -1,8 +1,10 @@
 input {
-  tcp {
-    port => 5000
-    codec => json_lines
-  }
+{% for logstash_input in logstash_inputs %}
+  {{ logstash_input.input_type }} {
+    port => {{ logstash_input.port }}
+    codec => {{ logstash_input.codec }}
+   }
+{% endfor %}
 {% for queue in rabbitmq_queue %}
   rabbitmq {
     durable => true
