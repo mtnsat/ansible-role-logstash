@@ -17,7 +17,7 @@
 #    - 30-lumberjack-output.conf
   notify: restart logstash
 
-- name: Create Logstash filters.
+- name: Copy over Logstash filters.
   copy:
     src: "filters/{{ item }}"
     dest: "/etc/logstash/conf.d/{{ item }}"
@@ -26,6 +26,16 @@
     mode: 0644
   with_items: "{{ logstash_filters}}"
   notify: restart logstash
+
+- name: Create Logstash filters
+  template:
+    src: "filter.conf.j2"
+    dest: "/etc/logstash/conf.d/filter.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart logstash
+  when: logstash_filter is defined
 
 - name: Create Logstash configuration file for local syslog.
   template:
