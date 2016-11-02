@@ -70,6 +70,9 @@
     - "{{ logstash_ssl_certificate_file }}"
   notify: restart logstash
 
+- name: Ensure Logstash is started and enabled on boot.
+  service: "name=logstash state=started enabled={{ logstash_enabled_on_boot }}"
+
 - name: set logstash JAVA_OPTS
   lineinfile:
     dest: /etc/default/logstash
@@ -78,6 +81,3 @@
     insertafter: "^#LS_JAVA_OPTS"
   notify: restart logstash
   when: logstash_java_opts is defined
-
-- name: Ensure Logstash is started and enabled on boot.
-  service: "name=logstash state=started enabled={{ logstash_enabled_on_boot }}"
