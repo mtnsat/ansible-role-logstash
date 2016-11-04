@@ -5,23 +5,6 @@ input {
     codec => {{ logstash_input.codec }}
    }
 {% endfor %}
-{% for queue in rabbitmq_queue %}
-  rabbitmq {
-    durable => true
-    exchange => '{{ queue.queue_name }}'
-    host => '{{ rabbitmq_host }}'
-    password => '{{ rabbitmq_password}}'
-    queue => '{{ queue.queue_name }}'
-    user => '{{ rabbitmq_user }}'
-    vhost => '/{{ queue.vhost_name }}'
-{% if queue.queue_name == "zeroimpact" %}
-    codec => 'json'
-{% else %}
-    codec => 'json_lines'
-{% endif %}
-    add_field => ['@type','{{ queue.queue_name }}-rabbitmq-input']
-  }
-{% endfor %}
 }
 
 ## Add filters here

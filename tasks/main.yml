@@ -76,6 +76,7 @@
     regexp: "^LS_JAVA_OPTS="
     line: "LS_JAVA_OPTS=\"{{ logstash_java_opts }}\""
     insertafter: "^#LS_JAVA_OPTS"
+    create: yes
   notify: restart logstash
   when: logstash_java_opts is defined
 
