@@ -3,6 +3,13 @@ input {
   {{ logstash_input.input_type }} {
     port => {{ logstash_input.port }}
     codec => {{ logstash_input.codec }}
+  {% if logstash_input.ssl is defined %}
+    ssl => true
+    ssl_certificate_authorities => [ '{{ logstash_input.ssl.ca_authorities }}']
+    ssl_certificate => {{ logstash_input.ssl.ssl_cert }}
+    ssl_key => {{ logstash_input.ssl.ssl_key }}
+    ssl_verify_mode => {{ logstash_input.ssl.verify_mode }}
+  {% endif %}
    }
 {% endfor %}
 }
