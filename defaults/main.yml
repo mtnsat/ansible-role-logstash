@@ -15,7 +15,6 @@ logstash_java_opts: >-
   -Dcom.sun.management.jmxremote.local.only=false
   -Dcom.sun.management.jmxremote.authenticate=false
   -Dcom.sun.management.jmxremote.ssl=false
-  -Djava.rmi.server.hostname={% if vagrant_test_env %}{{ ansible_eth1.ipv4.address }}{% else %}{{ ansible_eth0.ipv4.address }}{% endif %}
-
+  -Djava.rmi.server.hostname={{ ansible_default_ipv4.address }}
 logstash_enabled_on_boot: yes
 logstash_version: 5.0.0

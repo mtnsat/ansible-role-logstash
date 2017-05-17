@@ -13,8 +13,6 @@
     group: root
     mode: 0644
   with_items: "{{ logstash_config_file }}"
-#    - 01-lumberjack-input.conf
-#    - 30-lumberjack-output.conf
   notify: restart logstash
 
 - name: Copy over Logstash filters.
@@ -37,15 +35,16 @@
   notify: restart logstash
   when: logstash_filter is defined
 
-- name: Create Logstash configuration file for local syslog.
-  template:
-    src: 02-local-syslog-input.conf.j2
-    dest: /etc/logstash/conf.d/02-local-syslog-input.conf
-    owner: root
-    group: root
-    mode: 0644
-  when: logstash_monitor_local_syslog
-  notify: restart logstash
+## FIXME: This causes overlogging in elastic-stack on Ubuntu 16.04
+# - name: Create Logstash configuration file for local syslog.
+#   template:
+#     src: 02-local-syslog-input.conf.j2
+#     dest: /etc/logstash/conf.d/02-local-syslog-input.conf
+#     owner: root
+#     group: root
+#     mode: 0644
+#   when: logstash_monitor_local_syslog
+#   notify: restart logstash
 
 - name: Warn user if using insecure SSL key pair.
   debug:

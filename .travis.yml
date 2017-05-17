@@ -17,8 +17,14 @@ install:
   - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
 
   # Install required dependencies.
-  - git clone https://github.com/geerlingguy/ansible-role-java.git geerlingguy.java
-  - git clone https://github.com/mtnsat/ansible-role-elasticsearch mtnsat.elasticsearch
+  - >-
+    git clone
+    https://github.com/geerlingguy/ansible-role-java.git
+    geerlingguy.java
+  - >-
+    git clone
+    https://github.com/mtnsat/ansible-role-elasticsearch
+    mtnsat.elasticsearch
 
 script:
   # Check the role/playbook's syntax.
