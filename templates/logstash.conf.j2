@@ -14,12 +14,16 @@ input {
 {% endfor %}
 }
 
-## Add filters here
-
-
 output {
-  elasticsearch {
-    hosts => "{{ elasticsearch_host }}:9200"
+  if [log_source] == "bind_logs" {
+    elasticsearch {
+      hosts => "{{ elasticsearch_host }}:9200"
+      index => "bind_logs-%{+YYYY.MM.dd}"
   }
-  stdout { }
+ } else {
+    elasticsearch {
+      hosts => "{{ elasticsearch_host }}:9200"
+      index => "logstash-%{+YYYY.MM.dd}"
+  }
+ }
 }
