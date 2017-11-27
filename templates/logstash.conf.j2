@@ -15,13 +15,15 @@ input {
 }
 
 output {
-  if [log_source] == "bind_logs" {
-    elasticsearch {
+if [index]{
+  elasticsearch {
       hosts => {{ logstash_es_output | to_json }}
-      index => "bind_logs-%{+YYYY.MM.dd}"
+      index => "%{index}-%{+YYYY.MM.dd}"
   }
- } else {
-    elasticsearch {
+}
+
+  else {
+  elasticsearch {
       hosts => {{ logstash_es_output | to_json }}
       index => "logstash-%{+YYYY.MM.dd}"
   }
