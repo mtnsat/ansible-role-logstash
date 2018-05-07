@@ -91,5 +91,13 @@
   notify:
     - restart logstash
 
+- name: set logstash.yml
+  template:
+    src: logstash.yml.j2
+    dest: /etc/logstash/logstash.yml
+  notify:
+    - restart logstash
+
+
 - name: Ensure Logstash is started and enabled on boot.
   service: "name=logstash state=started enabled={{ logstash_enabled_on_boot }}"

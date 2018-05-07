@@ -19,3 +19,8 @@ logstash_java_opts: >-
 logstash_enabled_on_boot: yes
 logstash_version: 6.2.2
 elastic_apt_repo: 'deb https://artifacts.elastic.co/packages/6.x/apt stable main'
+logstash_settings:
+  - dead_letter_queue.enable: True
+  - path.data: /var/lib/logstash
+  - path.config: /etc/logstash/conf.d
+  - path.logs: /var/log/logstash
