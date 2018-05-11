@@ -24,3 +24,4 @@ logstash_settings:
   - path.data: /var/lib/logstash
   - path.config: /etc/logstash/conf.d
   - path.logs: /var/log/logstash
+  - path.dead_letter_queue: "/var/logstash/dead_letter_queue"
