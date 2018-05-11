@@ -69,6 +69,12 @@
     - "{{ logstash_ssl_certificate_file }}"
   notify: restart logstash
 
+- name: define logstash.yml
+  template:
+    src: logstash.yml.j2
+    dest: /etc/logstash/logstash.yml
+  notify: restart logstash
+
 - name: set logstash JAVA_OPTS
   lineinfile:
     dest: /etc/default/logstash
