@@ -18,6 +18,7 @@ output {
 if [index]{
   elasticsearch {
       hosts => {{ logstash_es_output | to_json }}
+      sniffing => true
       index => "%{index}-%{+YYYY.MM.dd}"
   }
 }
@@ -25,6 +26,7 @@ if [index]{
   else {
   elasticsearch {
       hosts => {{ logstash_es_output | to_json }}
+      sniffing => true
       index => "logstash-%{type}-%{+YYYY.MM.dd}"
   }
  }
