@@ -15,6 +15,15 @@ input {
 }
 
 output {
+{% if logstash_outputs is defined %}
+  {% for logstash_output in logstash_outputs %}
+    {{ logstash_output.output_type }} {
+      {{ logstash_output.output_config }}
+    }
+
+  {% endfor %}
+}
+{% else %}
 if [index]{
   elasticsearch {
       hosts => {{ logstash_es_output | to_json }}
@@ -31,3 +40,4 @@ if [index]{
   }
  }
 }
+{% endif %}
