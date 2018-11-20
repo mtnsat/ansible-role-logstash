@@ -2,7 +2,9 @@ input {
 {% for logstash_input in logstash_inputs %}
   {{ logstash_input.input_type }} {
     port => {{ logstash_input.port }}
+  {% if logstash_input.codec is defined %}
     codec => {{ logstash_input.codec }}
+  {% endif %}
   {% if logstash_input.ssl is defined %}
     ssl => true
     ssl_certificate_authorities => [ '{{ logstash_input.ssl.ca_authorities }}']
