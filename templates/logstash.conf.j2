@@ -25,6 +25,8 @@ output {
 
   {% endfor %}
 }
+{% if logstash_output is defined %}
+  {{ logstash_output }}
 {% else %}
 if [index]{
   elasticsearch {
