@@ -23,7 +23,7 @@
     group: root
     mode: 0644
   with_items: "{{ logstash_filters}}"
-  when: logstash_filter is defined
+  when: logstash_filters is defined
   notify: restart logstash
 
 - name: Create Logstash filters
