@@ -40,6 +40,10 @@ if [index] == "ics-logs" {
             "follow_redirects" => false
           }
         }
+       elasticsearch {
+        host => {{ logstash_es_output | to_json }}
+        index => "logstash-%{type}-%{+YYYY.MM.dd}"
+        }
 }
 if [index]{
   elasticsearch {
