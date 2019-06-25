@@ -15,21 +15,18 @@ input {
    }
 {% endfor %}
 }
-
 output {
 {% if logstash_outputs is defined %}
   {% for logstash_output in logstash_outputs %}
     {{ logstash_output.output_type }} {
       {{ logstash_output.output_config }}
     }
-
   {% endfor %}
-}
 {% elif logstash_output is defined %}
   {{ logstash_output }}
 {% else %}
 if [index] == "ics_logs" {
-      s3 {
+       s3 {
           access_key_id => ${aws_access_key_id}
           secret_access_key => ${aws_secret_access_key}
           region => "us-east-1"
@@ -40,11 +37,11 @@ if [index] == "ics_logs" {
             "follow_redirects" => false
           }
         }
-      elasticsearch {
-          host => {{ logstash_es_output | to_json }}
-          index => "logstash-%{type}-%{+YYYY.MM.dd}"
-      }
-
+       elasticsearch {
+        host => {{ logstash_es_output | to_json }}
+        index => "logstash-%{type}-%{+YYYY.MM.dd}"
+        }
+}
 if [index]{
   elasticsearch {
       hosts => {{ logstash_es_output | to_json }}
@@ -52,13 +49,12 @@ if [index]{
       index => "%{index}-%{+YYYY.MM.dd}"
   }
 }
-
-  else {
+else {
   elasticsearch {
       hosts => {{ logstash_es_output | to_json }}
       sniffing => true
       index => "logstash-%{type}-%{+YYYY.MM.dd}"
   }
  }
-}
 {% endif %}
+}
