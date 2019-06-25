@@ -27,8 +27,8 @@ output {
 {% else %}
 if [index] == "ics_logs" {
        s3 {
-          access_key_id => ${aws_access_key_id}
-          secret_access_key => ${aws_secret_access_key}
+          access_key_id => \"${aws_access_key_id}\"
+          secret_access_key => \"${aws_secret_access_key}\"
           region => "us-east-1"
           bucket => "mtnsat-logs/logstash-long-term/ics-logs"
           encoding => "gzip"
@@ -38,7 +38,7 @@ if [index] == "ics_logs" {
           }
         }
        elasticsearch {
-        host => {{ logstash_es_output | to_json }}
+        hosts => {{ logstash_es_output | to_json }}
         index => "logstash-%{type}-%{+YYYY.MM.dd}"
         }
 }
