@@ -25,22 +25,25 @@ output {
 {% elif logstash_output is defined %}
   {{ logstash_output }}
 {% else %}
+output {
 if [index] == "ics_logs" {
-       s3 {
-          access_key_id => \"${aws_access_key_id}\"
-          secret_access_key => \"${aws_secret_access_key}\"
-          region => "us-east-1"
-          bucket => "mtnsat-logs/logstash-long-term/ics-logs"
-          encoding => "gzip"
-          additional_settings => {
-            "force_path_style" => true
-            "follow_redirects" => false
-          }
-        }
-       elasticsearch {
-        hosts => {{ logstash_es_output | to_json }}
-        index => "logstash-%{type}-%{+YYYY.MM.dd}"
-        }
+  s3 {
+    access_key_id => "${aws_access_key_id}"
+    secret_access_key => "${aws_secret_access_key}"
+    region => "us-east-1"
+    bucket => "mtnsat-logs"
+    prefix => "mtnsat-logs/logstash-long-term/ics-logs"
+    encoding => "gzip"
+    validate_credentials_on_root_bucket => false
+    additional_settings => {
+      "force_path_style" => true
+      "follow_redirects" => false
+    }
+  }
+  elasticsearch {
+    hosts => ["localhost:9200"]
+    index => "logstash-%{type}-%{+YYYY.MM.dd}"
+  }
 }
 if [index]{
   elasticsearch {
